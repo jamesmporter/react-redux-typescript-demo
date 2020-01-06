@@ -4,10 +4,15 @@ import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import { createStore, applyMiddleware } from "redux";
-import rootReducer from "./store/reducers/rootReducer";
+import rootReducer from "./store/reducers";
 import { Provider } from "react-redux";
 import { reduxFirestore, getFirestore } from "redux-firestore";
-import { ReactReduxFirebaseProvider, getFirebase } from "react-redux-firebase";
+import {
+  ReactReduxFirebaseProvider,
+  getFirebase,
+  ReactReduxFirebaseProviderProps,
+  ReactReduxFirebaseConfig
+} from "react-redux-firebase";
 import firebaseApp from "./config/fbConfig";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./store/sagas";
@@ -23,7 +28,7 @@ const sagaMiddleware = createSagaMiddleware({
   }
 });
 
-const rrfConfig = {
+const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
   userProfile: "users",
   useFirestoreForProfile: true,
   logErrors: false
@@ -36,7 +41,7 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-const rrfProps = {
+const rrfProps: ReactReduxFirebaseProviderProps = {
   firebase: firebaseApp,
   config: rrfConfig,
   dispatch: store.dispatch,
