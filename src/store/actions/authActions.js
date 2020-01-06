@@ -1,8 +1,20 @@
-export const signIn = credentials => {
-  return {
-    type: "LOGIN_REQUEST",
-    payload: credentials
-  };
+export const signIn = {
+  request: credentials => {
+    return {
+      type: "LOGIN_REQUEST",
+      payload: credentials
+    };
+  },
+  success: () => {
+    return {
+      type: "LOGIN_SUCCESS"
+    };
+  },
+  error: e => {
+    return {
+      type: "LOGIN_ERROR"
+    };
+  }
 };
 
 export const signOut = () => {

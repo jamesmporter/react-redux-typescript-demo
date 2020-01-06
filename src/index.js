@@ -12,7 +12,7 @@ import firebaseApp from "./config/fbConfig";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./store/sagas";
 import { createFirestoreInstance } from "redux-firestore";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 
 const sagaMiddleware = createSagaMiddleware({
   context: {

@@ -1,4 +1,5 @@
 import { all, call, put, getContext, takeEvery } from "redux-saga/effects";
+import { signIn as signInAction } from "../actions/authActions";
 
 /**
  * This function exists because @function [call] does not accept the firebase function directly.
@@ -19,10 +20,9 @@ function* signIn(action) {
         .signInWithEmailAndPassword(credentials.email, credentials.password);
     });
 
-    yield put({ type: "LOGIN_SUCCESS" });
+    yield put(signInAction.success());
   } catch (err) {
-    console.log(err);
-    yield put({ type: "LOGIN_ERROR", err });
+    yield put(signInAction.error(err));
   }
 }
 
