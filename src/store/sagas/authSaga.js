@@ -2,35 +2,10 @@ import { all, call, put, getContext, takeEvery } from "redux-saga/effects";
 
 /**
  * This function exists because @function [call] does not accept the firebase function directly.
- *
- * @param {*} firebase
- * @param {*} credentials
+ * @param {*} fn
  */
-async function signInWithEmailAndPassword(firebase, credentials) {
-  return firebase
-    .auth()
-    .signInWithEmailAndPassword(credentials.email, credentials.password);
-}
-
-async function signOutABC(firebase) {
-  return firebase.auth().signOut();
-}
-
-async function signUpABC(firebase, newUser) {
-  return firebase
-    .auth()
-    .createUserWithEmailAndPassword(newUser.email, newUser.password);
-}
-
-async function setUserOnFirestore(firestore, uid, newUser) {
-  return firestore
-    .collection("users")
-    .doc(uid)
-    .set({
-      firstName: newUser.firstName,
-      lastName: newUser.lastName,
-      initials: newUser.firstName[0] + newUser.lastName[0]
-    });
+async function wrap(fn) {
+  return fn();
 }
 
 function* signIn(action) {
@@ -38,10 +13,15 @@ function* signIn(action) {
     const credentials = action.payload;
     const getFirebase = yield getContext("getFirebase");
 
-    yield call(signInWithEmailAndPassword, getFirebase(), credentials);
+    yield call(wrap, () => {
+      return getFirebase()
+        .auth()
+        .signInWithEmailAndPassword(credentials.email, credentials.password);
+    });
 
     yield put({ type: "LOGIN_SUCCESS" });
   } catch (err) {
+    console.log(err);
     yield put({ type: "LOGIN_ERROR", err });
   }
 }
@@ -50,21 +30,39 @@ function* signOut() {
   const getFirebase = yield getContext("getFirebase");
 
   try {
-    yield call(signOutABC, getFirebase());
+    yield call(wrap, () => {
+      return getFirebase()
+        .auth()
+        .signOut();
+    });
     yield put({ type: "SIGNOUT_SUCCESS" });
   } catch (err) {
     yield put({ type: "SIGNOUT_ERROR", err });
   }
 }
-
 function* signUp(action) {
   const newUser = action.payload;
   const getFirebase = yield getContext("getFirebase");
   const getFirestore = yield getContext("getFirestore");
 
   try {
-    const response = yield call(signUpABC, getFirebase(), newUser);
-    yield call(setUserOnFirestore, getFirestore(), response.user.uid, newUser);
+    const response = yield call(wrap, () => {
+      return getFirebase()
+        .auth()
+        .createUserWithEmailAndPassword(newUser.email, newUser.password);
+    });
+
+    yield call(wrap, () => {
+      return getFirestore()
+        .collection("users")
+        .doc(response.user.uid)
+        .set({
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          initials: newUser.firstName[0] + newUser.lastName[0]
+        });
+    });
+
     yield put({ type: "SIGNUP_SUCCESS" });
   } catch (err) {
     yield put({ type: "SIGNUP_ERROR", err });
