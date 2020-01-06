@@ -1,43 +1,41 @@
+import * as ReduxTypes from "ReduxTypes";
+import { Types } from "../types/authTypes";
+
 const initState = {
   authError: null
-}
+};
 
-const authReducer = (state = initState, action) => {
-  switch(action.type){
-    case 'LOGIN_ERROR':
-      console.log('login error');
+const authReducer = (state = initState, action: ReduxTypes.AnyAction) => {
+  switch (action.type) {
+    case Types.LOGIN_ERROR:
       return {
         ...state,
-        authError: 'Login failed'
-      }
+        authError: "Login failed"
+      };
 
-    case 'LOGIN_SUCCESS':
-      console.log('login success');
+    case Types.LOGIN_SUCCESS:
       return {
         ...state,
         authError: null
-      }
+      };
 
-    case 'SIGNOUT_SUCCESS':
-      console.log('signout success');
+    case Types.SIGNOUT_SUCCESS:
       return state;
 
-    case 'SIGNUP_SUCCESS':
-      console.log('signup success')
+    case Types.SIGNUP_SUCCESS:
       return {
         ...state,
         authError: null
-      }
+      };
 
-    case 'SIGNUP_ERROR':
-      console.log('signup error')
+    case Types.SIGNUP_ERROR:
       return {
         ...state,
-        authError: action.err.message
-      }
+        authError: action.payload.message
+      };
 
     default:
-      return state
+      return state;
   }
 };
 

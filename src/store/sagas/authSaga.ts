@@ -1,15 +1,18 @@
 import { all, call, put, getContext, takeEvery } from "redux-saga/effects";
-import { signIn as signInAction } from "../actions/authActions";
+import * as actions from "../actions/authActions";
+import { PayloadAction, Action } from "typesafe-actions";
+import { Types } from "../types/authTypes";
+import { LoginCredentials, SignUpCredentials } from "../objects/authObjects";
 
 /**
  * This function exists because @function [call] does not accept the firebase function directly.
  * @param {*} fn
  */
-async function wrap(fn) {
+async function wrap(fn: () => Promise<any>) {
   return fn();
 }
 
-function* signIn(action) {
+function* signIn(action: PayloadAction<Types.LOGIN_REQUEST, LoginCredentials>) {
   try {
     const credentials = action.payload;
     const getFirebase = yield getContext("getFirebase");
@@ -20,13 +23,13 @@ function* signIn(action) {
         .signInWithEmailAndPassword(credentials.email, credentials.password);
     });
 
-    yield put(signInAction.success());
+    yield put(actions.signIn.success());
   } catch (err) {
-    yield put(signInAction.error(err));
+    yield put(actions.signIn.error(err));
   }
 }
 
-function* signOut() {
+function* signOut(action: Action<Types.SIGNOUT_REQUEST>) {
   const getFirebase = yield getContext("getFirebase");
 
   try {
@@ -35,12 +38,14 @@ function* signOut() {
         .auth()
         .signOut();
     });
-    yield put({ type: "SIGNOUT_SUCCESS" });
+    yield put(actions.signOutSuccess());
   } catch (err) {
-    yield put({ type: "SIGNOUT_ERROR", err });
+    yield put(actions.signOutError(err));
   }
 }
-function* signUp(action) {
+function* signUp(
+  action: PayloadAction<Types.SIGNUP_REQUEST, SignUpCredentials>
+) {
   const newUser = action.payload;
   const getFirebase = yield getContext("getFirebase");
   const getFirestore = yield getContext("getFirestore");
@@ -63,16 +68,16 @@ function* signUp(action) {
         });
     });
 
-    yield put({ type: "SIGNUP_SUCCESS" });
+    yield put(actions.signUpSuccess());
   } catch (err) {
-    yield put({ type: "SIGNUP_ERROR", err });
+    yield put(actions.signUpError(err));
   }
 }
 
 export default function* watchSignIn() {
   yield all([
-    takeEvery("LOGIN_REQUEST", signIn),
-    takeEvery("SIGNOUT_REQUEST", signOut),
-    takeEvery("SIGNUP_REQUEST", signUp)
+    takeEvery(Types.LOGIN_REQUEST, signIn),
+    takeEvery(Types.SIGNOUT_REQUEST, signOut),
+    takeEvery(Types.SIGNUP_REQUEST, signUp)
   ]);
 }
