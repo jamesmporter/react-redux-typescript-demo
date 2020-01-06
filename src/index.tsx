@@ -13,6 +13,7 @@ import createSagaMiddleware from "redux-saga";
 import rootSaga from "./store/sagas";
 import { createFirestoreInstance } from "redux-firestore";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
+import firebase from "firebase/app";
 
 const sagaMiddleware = createSagaMiddleware({
   context: {
@@ -30,10 +31,7 @@ const rrfConfig = {
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(
-    applyMiddleware(sagaMiddleware),
-    reduxFirestore(firebaseApp)
-  )
+  composeWithDevTools(applyMiddleware(sagaMiddleware), reduxFirestore(firebase))
 );
 
 sagaMiddleware.run(rootSaga);
