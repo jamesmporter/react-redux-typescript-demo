@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "marioplan-files"
+    "default": "social-network-dev",
+    "dev": "social-network-dev-845aa"
   }
 }

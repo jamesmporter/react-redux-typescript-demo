@@ -7,29 +7,54 @@ import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./store/reducers/rootReducer";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import { reduxFirestore, getFirestore } from "redux-firestore";
-import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
-import fbConfig from "./config/fbConfig";
+import { getFirestore } from "redux-firestore";
+import { ReactReduxFirebaseProvider, getFirebase } from "react-redux-firebase";
+import firebaseApp from "./config/fbConfig";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "./store/sagas";
+import { createFirestoreInstance } from "redux-firestore";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+const sagaMiddleware = createSagaMiddleware({
+  context: {
+    // Add "firebase" as a const/enum somewhere
+    reduxSagaFirebase: firebaseApp,
+    getFirebase: getFirebase
+  }
+});
+
+const rrfConfig = {
+  userProfile: "users",
+  useFirestoreForProfile: true,
+  logErrors: false
+};
 
 const store = createStore(
   rootReducer,
-  compose(
-    applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
-    reactReduxFirebase(fbConfig, {
-      userProfile: "users",
-      useFirestoreForProfile: true,
-      attachAuthIsReady: true
-    }),
-    reduxFirestore(fbConfig) // redux bindings for firestore
+  composeWithDevTools(
+    applyMiddleware(
+      thunk.withExtraArgument({ getFirebase, getFirestore }),
+      sagaMiddleware
+    )
   )
 );
 
-store.firebaseAuthIsReady.then(() => {
-  ReactDOM.render(
-    <Provider store={store}>
+sagaMiddleware.run(rootSaga);
+
+const rrfProps = {
+  firebase: firebaseApp,
+  config: rrfConfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance
+};
+
+ReactDOM.render(
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
       <App />
-    </Provider>,
-    document.getElementById("root")
-  );
-  registerServiceWorker();
-});
+    </ReactReduxFirebaseProvider>
+  </Provider>,
+  document.getElementById("root")
+);
+
+registerServiceWorker();
