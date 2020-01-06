@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { signIn, triggerSignIn } from "../../store/actions/authActions";
+import { signIn } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
 
 class SignIn extends Component {
@@ -53,8 +53,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // signIn: creds => dispatch(signIn(creds))
-    signIn: creds => dispatch(triggerSignIn(creds))
+    signIn: creds => dispatch(signIn(creds))
   };
 };
 

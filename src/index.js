@@ -3,11 +3,10 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./store/reducers/rootReducer";
 import { Provider } from "react-redux";
-import thunk from "redux-thunk";
-import { getFirestore } from "redux-firestore";
+import { reduxFirestore, getFirestore } from "redux-firestore";
 import { ReactReduxFirebaseProvider, getFirebase } from "react-redux-firebase";
 import firebaseApp from "./config/fbConfig";
 import createSagaMiddleware from "redux-saga";
@@ -17,9 +16,9 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 const sagaMiddleware = createSagaMiddleware({
   context: {
-    // Add "firebase" as a const/enum somewhere
-    reduxSagaFirebase: firebaseApp,
-    getFirebase: getFirebase
+    // Add "firebase" and "firestore" as a const/enum somewhere
+    getFirebase,
+    getFirestore
   }
 });
 
@@ -32,10 +31,8 @@ const rrfConfig = {
 const store = createStore(
   rootReducer,
   composeWithDevTools(
-    applyMiddleware(
-      thunk.withExtraArgument({ getFirebase, getFirestore }),
-      sagaMiddleware
-    )
+    applyMiddleware(sagaMiddleware),
+    reduxFirestore(firebaseApp)
   )
 );
 
