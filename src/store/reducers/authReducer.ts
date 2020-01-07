@@ -12,7 +12,6 @@ const authReducer = (state = initState, action: ReduxTypes.AnyAction) => {
         ...state,
         authError: "Login failed"
       };
-
     case Types.LOGIN_SUCCESS:
       return {
         ...state,
@@ -27,13 +26,11 @@ const authReducer = (state = initState, action: ReduxTypes.AnyAction) => {
         ...state,
         authError: null
       };
-
     case Types.SIGNUP_ERROR:
       return {
         ...state,
         authError: action.payload.message
       };
-
     default:
       return state;
   }

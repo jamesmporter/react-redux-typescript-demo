@@ -10,30 +10,30 @@ export const signIn = {
     return action(Types.LOGIN_SUCCESS);
   },
   error: (e: Error) => {
-    return action(Types.LOGIN_ERROR);
+    return action(Types.LOGIN_ERROR, e);
   }
 };
 
-export const signOut = () => {
-  return action(Types.SIGNOUT_REQUEST);
+export const signOut = {
+  request: () => {
+    return action(Types.SIGNOUT_REQUEST);
+  },
+  success: () => {
+    return action(Types.SIGNOUT_SUCCESS);
+  },
+  error: (e: Error) => {
+    return action(Types.SIGNOUT_ERROR, e);
+  }
 };
 
-export const signOutSuccess = () => {
-  return action(Types.SIGNOUT_SUCCESS);
-};
-
-export const signOutError = (e: Error) => {
-  return action(Types.SIGNOUT_ERROR, e);
-};
-
-export const signUp = (credentials: SignUpCredentials) => {
-  return action(Types.SIGNUP_REQUEST, credentials);
-};
-
-export const signUpSuccess = () => {
-  return action(Types.SIGNUP_SUCCESS);
-};
-
-export const signUpError = (e: Error) => {
-  return action(Types.SIGNUP_ERROR, e);
+export const signUp = {
+  request: (credentials: SignUpCredentials) => {
+    return action(Types.SIGNUP_REQUEST, credentials);
+  },
+  success: () => {
+    return action(Types.SIGNUP_SUCCESS);
+  },
+  error: (e: Error) => {
+    return action(Types.SIGNUP_ERROR, e);
+  }
 };

@@ -38,9 +38,9 @@ function* signOut(action: Action<Types.SIGNOUT_REQUEST>) {
         .auth()
         .signOut();
     });
-    yield put(actions.signOutSuccess());
+    yield put(actions.signOut.success());
   } catch (err) {
-    yield put(actions.signOutError(err));
+    yield put(actions.signOut.error(err));
   }
 }
 function* signUp(
@@ -68,9 +68,9 @@ function* signUp(
         });
     });
 
-    yield put(actions.signUpSuccess());
+    yield put(actions.signUp.success());
   } catch (err) {
-    yield put(actions.signUpError(err));
+    yield put(actions.signUp.error(err));
   }
 }
 
