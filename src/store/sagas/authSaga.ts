@@ -1,6 +1,6 @@
 import { all, call, put, getContext, takeEvery } from "redux-saga/effects";
 import * as actions from "../actions/authActions";
-import { PayloadAction, Action } from "typesafe-actions";
+import { PayloadAction } from "typesafe-actions";
 import { Types } from "../types/authTypes";
 import { LoginCredentials, SignUpCredentials } from "../objects/authObjects";
 import { wrap } from "./sagaHelpers";
@@ -22,7 +22,7 @@ function* signIn(action: PayloadAction<Types.LOGIN_REQUEST, LoginCredentials>) {
   }
 }
 
-function* signOut(action: Action<Types.SIGNOUT_REQUEST>) {
+function* signOut() {
   const getFirebase = yield getContext("getFirebase");
 
   try {

@@ -34,7 +34,8 @@ const sagaMiddleware = createSagaMiddleware({
 const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
   userProfile: "users",
   useFirestoreForProfile: true,
-  logErrors: false
+  logErrors: false,
+  attachAuthIsReady: true
 };
 
 const store = createStore(
