@@ -26,11 +26,3 @@ export class SignUpCredentials {
     this.lastName = lastName;
   }
 }
-
-export class AuthInbound {
-  uid: string;
-
-  constructor(uid: string) {
-    this.uid = uid;
-  }
-}

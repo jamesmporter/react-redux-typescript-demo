@@ -3,14 +3,14 @@ import { connect } from "react-redux";
 import { createProject } from "../../store/actions/projectActions";
 import { Redirect } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
-import { AuthInbound } from "../../store/objects/authObjects";
 import { NewProject } from "../../store/objects/projectObjects";
 import { ReducerState, AnyAction } from "ReduxTypes";
+import { FirebaseReducer } from "react-redux-firebase";
 
 interface OwnProps extends RouteComponentProps {}
 
 interface StateProps {
-  auth: AuthInbound;
+  auth: FirebaseReducer.AuthState;
 }
 
 interface DispatchProps {

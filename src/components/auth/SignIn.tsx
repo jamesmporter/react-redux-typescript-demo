@@ -2,11 +2,12 @@ import React, { Dispatch, useState } from "react";
 import { connect } from "react-redux";
 import { signIn } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
-import { AuthInbound, LoginCredentials } from "../../store/objects/authObjects";
+import { LoginCredentials } from "../../store/objects/authObjects";
 import { ReducerState, AnyAction } from "ReduxTypes";
+import { FirebaseReducer } from "react-redux-firebase";
 
 interface StateProps {
-  auth: AuthInbound;
+  auth: FirebaseReducer.AuthState;
   authError: string | null;
 }
 

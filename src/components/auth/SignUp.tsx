@@ -3,13 +3,11 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { signUp } from "../../store/actions/authActions";
 import { ReducerState, AnyAction } from "ReduxTypes";
-import {
-  SignUpCredentials,
-  AuthInbound
-} from "../../store/objects/authObjects";
+import { SignUpCredentials } from "../../store/objects/authObjects";
+import { FirebaseReducer } from "react-redux-firebase";
 
 interface StateProps {
-  auth: AuthInbound;
+  auth: FirebaseReducer.AuthState;
   authError: string | null;
 }
 

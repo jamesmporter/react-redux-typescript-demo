@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import SignedInLinks from "./SignedInLinks";
 import SignedOutLinks from "./SignedOutLinks";
 import { connect } from "react-redux";
-import { AuthInbound } from "../../store/objects/authObjects";
 import { ProfileInbound } from "../../store/objects/profileObjects";
 import { ReducerState } from "ReduxTypes";
+import { FirebaseReducer } from "react-redux-firebase";
 
 interface StateProps {
-  auth: AuthInbound;
+  auth: FirebaseReducer.AuthState;
   profile: ProfileInbound | null;
 }
 

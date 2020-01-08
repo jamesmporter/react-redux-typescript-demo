@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
+import { firestoreConnect, FirebaseReducer } from "react-redux-firebase";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import moment from "moment";
 import { ProjectInbound } from "../../store/objects/projectObjects";
-import { AuthInbound } from "../../store/objects/authObjects";
 import { ReducerState } from "ReduxTypes";
 import { RouteComponentProps } from "react-router-dom";
 
@@ -17,7 +16,7 @@ interface OwnProps extends RouteComponentProps<RouteParams> {}
 
 interface Props {
   project: ProjectInbound;
-  auth: AuthInbound;
+  auth: FirebaseReducer.AuthState;
 }
 
 const ProjectDetails: React.FunctionComponent<Props & OwnProps> = ({
