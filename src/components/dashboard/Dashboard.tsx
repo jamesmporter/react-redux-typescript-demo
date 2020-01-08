@@ -1,13 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 import ProjectList from "../projects/ProjectList";
-import Notifications from "./Notifications";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
-import { Project } from "../../store/objects/projectObjects";
+import { ProjectInbound } from "../../store/objects/projectObjects";
+import { AuthInbound } from "../../store/objects/authObjects";
+import { ReducerState } from "ReduxTypes";
 
-const Dashboard = ({ projects, auth, notifications }) => {
+interface StateProps {
+  projects: ProjectInbound[];
+  auth: AuthInbound;
+}
+
+const Dashboard: React.FunctionComponent<StateProps> = ({ projects, auth }) => {
   if (!auth.uid) return <Redirect to="/signin" />;
 
   return (
@@ -16,26 +22,19 @@ const Dashboard = ({ projects, auth, notifications }) => {
         <div className="col s12 m6">
           <ProjectList projects={projects} />
         </div>
-        <div className="col s12 m5 offset-m1">
-          <Notifications notifications={notifications} />
-        </div>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: ReducerState): StateProps => {
   return {
     projects: state.firestore.ordered.projects,
-    auth: state.firebase.auth,
-    notifications: state.firestore.ordered.notifications
+    auth: state.firebase.auth
   };
 };
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect([
-    { collection: "projects", orderBy: ["createdAt", "desc"] },
-    { collection: "notifications", limit: 3, orderBy: ["time", "desc"] }
-  ])
+  firestoreConnect([{ collection: "projects", orderBy: ["createdAt", "desc"] }])
 )(Dashboard);
