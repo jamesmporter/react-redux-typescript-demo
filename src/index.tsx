@@ -24,7 +24,10 @@ const sagaMiddleware = createSagaMiddleware({
   context: {
     // Add "firebase" and "firestore" as a const/enum somewhere
     getFirebase,
-    getFirestore
+    getFirestore,
+    getState: () => {
+      return store.getState();
+    }
   }
 });
 

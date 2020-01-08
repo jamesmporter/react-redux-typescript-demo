@@ -3,14 +3,7 @@ import * as actions from "../actions/authActions";
 import { PayloadAction, Action } from "typesafe-actions";
 import { Types } from "../types/authTypes";
 import { LoginCredentials, SignUpCredentials } from "../objects/authObjects";
-
-/**
- * This function exists because @function [call] does not accept the firebase function directly.
- * @param {*} fn
- */
-async function wrap(fn: () => Promise<any>) {
-  return fn();
-}
+import { wrap } from "./sagaHelpers";
 
 function* signIn(action: PayloadAction<Types.LOGIN_REQUEST, LoginCredentials>) {
   try {
@@ -74,7 +67,7 @@ function* signUp(
   }
 }
 
-export default function* watchSignIn() {
+export default function* watcher() {
   yield all([
     takeEvery(Types.LOGIN_REQUEST, signIn),
     takeEvery(Types.SIGNOUT_REQUEST, signOut),
