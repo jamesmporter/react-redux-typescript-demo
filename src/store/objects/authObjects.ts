@@ -9,3 +9,11 @@ export interface SignUpCredentials {
   firstName: string;
   lastName: string;
 }
+
+export class AuthInbound {
+  uid: string;
+
+  constructor(uid: string) {
+    this.uid = uid;
+  }
+}
