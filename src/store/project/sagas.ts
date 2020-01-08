@@ -1,9 +1,9 @@
 import { all, call, put, getContext, takeEvery } from "redux-saga/effects";
-import * as actions from "../actions/projectActions";
+import * as actions from "./actions";
 import { PayloadAction } from "typesafe-actions";
-import { Types } from "../types/projectTypes";
-import { NewProject, Project } from "../objects/projectObjects";
-import { wrap } from "./sagaHelpers";
+import { Types } from "./types";
+import { NewProject, Project } from "./objects";
+import { wrap } from "../util/sagaHelpers";
 
 function* createProject(
   action: PayloadAction<Types.CREATE_PROJECT_REQUEST, NewProject>

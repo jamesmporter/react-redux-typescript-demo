@@ -1,9 +1,9 @@
 import React, { useState, Dispatch } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { signUp } from "../../store/actions/authActions";
+import { authActions } from "../../store/auth";
 import { ReducerState, AnyAction } from "ReduxTypes";
-import { SignUpCredentials } from "../../store/objects/authObjects";
+import { AuthObjects } from "../../store/auth";
 import { FirebaseReducer } from "react-redux-firebase";
 
 interface StateProps {
@@ -14,7 +14,7 @@ interface StateProps {
 interface DispatchProps {
   handleSubmit: (
     e: React.FormEvent<HTMLFormElement>,
-    credentials: SignUpCredentials
+    credentials: AuthObjects.SignUpCredentials
   ) => void;
 }
 
@@ -36,7 +36,12 @@ const SignUp: React.FunctionComponent<StateProps & DispatchProps> = ({
         onSubmit={e =>
           handleSubmit(
             e,
-            new SignUpCredentials(email, password, firstName, lastName)
+            new AuthObjects.SignUpCredentials(
+              email,
+              password,
+              firstName,
+              lastName
+            )
           )
         }
       >
@@ -95,10 +100,10 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): DispatchProps => {
   return {
     handleSubmit: (
       e: React.FormEvent<HTMLFormElement>,
-      credentials: SignUpCredentials
+      credentials: AuthObjects.SignUpCredentials
     ) => {
       e.preventDefault();
-      dispatch(signUp.request(credentials));
+      dispatch(authActions.signUp.request(credentials));
     }
   };
 };

@@ -1,6 +1,6 @@
-import { LoginCredentials, SignUpCredentials } from "../objects/authObjects";
+import { LoginCredentials, SignUpCredentials } from "./objects";
 import { action } from "typesafe-actions";
-import { Types } from "../types/authTypes";
+import Types from "./types";
 
 export const signIn = {
   request: (credentials: LoginCredentials) => {

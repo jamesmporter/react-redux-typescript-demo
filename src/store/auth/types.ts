@@ -1,4 +1,4 @@
-export enum Types {
+enum Types {
   LOGIN_REQUEST = "APP/AUTH/LOGIN/REQUEST",
   LOGIN_ERROR = "APP/AUTH/LOGIN/ERROR",
   LOGIN_SUCCESS = "APP/AUTH/LOGIN/SUCCESS",
@@ -9,3 +9,5 @@ export enum Types {
   SIGNUP_SUCCESS = "APP/AUTH/SIGNUP/SUCCESS",
   SIGNUP_ERROR = "APP/AUTH/SIGNUP/ERROR"
 }
+
+export default Types;

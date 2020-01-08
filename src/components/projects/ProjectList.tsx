@@ -1,10 +1,10 @@
 import React from "react";
 import ProjectSummary from "./ProjectSummary";
 import { Link } from "react-router-dom";
-import { ProjectInbound } from "../../store/objects/projectObjects";
+import { ProjectObjects } from "../../store/project";
 
 interface Props {
-  projects: ProjectInbound[];
+  projects: ProjectObjects.ProjectInbound[];
 }
 
 const ProjectList: React.FunctionComponent<Props> = ({ projects }) => {

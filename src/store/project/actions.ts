@@ -1,6 +1,6 @@
-import { NewProject } from "../objects/projectObjects";
+import { NewProject } from "./objects";
 import { action } from "typesafe-actions";
-import { Types } from "../types/projectTypes";
+import { Types } from "./types";
 
 export const createProject = {
   request: (project: NewProject) => {

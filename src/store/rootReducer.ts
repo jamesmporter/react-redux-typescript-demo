@@ -1,16 +1,16 @@
-import authReducer from "./authReducer";
-import projectReducer from "./projectReducer";
+import authReducer from "./auth";
+import projectReducer from "./project/reducers";
 import { combineReducers } from "redux";
 import { firestoreReducer } from "redux-firestore";
 import { firebaseReducer } from "react-redux-firebase";
-import { ProfileInbound } from "../objects/profileObjects";
+import { ProfileObjects } from "./profile";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   project: projectReducer,
   firestore: firestoreReducer,
   firebase: (state: any, action: any) =>
-    firebaseReducer<ProfileInbound>(state, action)
+    firebaseReducer<ProfileObjects.ProfileInbound>(state, action)
 });
 
 export default rootReducer;

@@ -1,5 +1,5 @@
 import * as ReduxTypes from "ReduxTypes";
-import { Types } from "../types/projectTypes";
+import { Types } from "./types";
 
 const initState = {};
 

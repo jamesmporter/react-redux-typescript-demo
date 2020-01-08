@@ -1,9 +1,9 @@
 import React, { Dispatch, useState } from "react";
 import { connect } from "react-redux";
-import { createProject } from "../../store/actions/projectActions";
+import { projectActions } from "../../store/project";
 import { Redirect } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
-import { NewProject } from "../../store/objects/projectObjects";
+import { ProjectObjects } from "../../store/project";
 import { ReducerState, AnyAction } from "ReduxTypes";
 import { FirebaseReducer } from "react-redux-firebase";
 
@@ -16,7 +16,7 @@ interface StateProps {
 interface DispatchProps {
   handleSubmit: (
     e: React.FormEvent<HTMLFormElement>,
-    newProject: NewProject
+    newProject: ProjectObjects.NewProject
   ) => void;
 }
 
@@ -31,7 +31,9 @@ const CreateProject: React.FunctionComponent<StateProps &
     <div className="container">
       <form
         className="white"
-        onSubmit={e => handleSubmit(e, new NewProject(title, content))}
+        onSubmit={e =>
+          handleSubmit(e, new ProjectObjects.NewProject(title, content))
+        }
       >
         <h5 className="grey-text text-darken-3">Create a New Project</h5>
         <div className="input-field">
@@ -74,10 +76,10 @@ const mapDispatchToProps = (
   return {
     handleSubmit: (
       e: React.FormEvent<HTMLFormElement>,
-      newProject: NewProject
+      newProject: ProjectObjects.NewProject
     ) => {
       e.preventDefault();
-      dispatch(createProject.request(newProject));
+      dispatch(projectActions.createProject.request(newProject));
       ownProps.history.push("/");
     }
   };

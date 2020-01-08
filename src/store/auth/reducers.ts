@@ -1,5 +1,5 @@
 import * as ReduxTypes from "ReduxTypes";
-import { Types } from "../types/authTypes";
+import Types from "./types";
 
 interface Auth {
   authError: string | null;

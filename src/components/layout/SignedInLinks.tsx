@@ -1,12 +1,12 @@
 import React, { Dispatch } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { signOut } from "../../store/actions/authActions";
+import { authActions } from "../../store/auth";
 import { AnyAction } from "ReduxTypes";
-import { ProfileInbound } from "../../store/objects/profileObjects";
+import { ProfileObjects } from "../../store/profile";
 
 interface OwnProps {
-  profile: ProfileInbound | null;
+  profile: ProfileObjects.ProfileInbound | null;
 }
 
 interface DispatchProps {
@@ -38,7 +38,7 @@ const SignedInLinks: React.FunctionComponent<DispatchProps & OwnProps> = ({
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): DispatchProps => {
   return {
-    signOut: () => dispatch(signOut.request())
+    signOut: () => dispatch(authActions.signOut.request())
   };
 };
 

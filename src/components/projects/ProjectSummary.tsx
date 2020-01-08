@@ -1,9 +1,9 @@
 import React from "react";
 import moment from "moment";
-import { ProjectInbound } from "../../store/objects/projectObjects";
+import { ProjectObjects } from "../../store/project";
 
 interface Props {
-  project: ProjectInbound;
+  project: ProjectObjects.ProjectInbound;
 }
 
 const ProjectSummary: React.FunctionComponent<Props> = ({ project }) => {

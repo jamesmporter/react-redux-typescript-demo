@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import { createStore, applyMiddleware } from "redux";
-import rootReducer from "./store/reducers";
+import rootReducer from "./store/rootReducer";
 import { Provider } from "react-redux";
 import { reduxFirestore, getFirestore } from "redux-firestore";
 import {
@@ -15,7 +15,7 @@ import {
 } from "react-redux-firebase";
 import firebaseApp from "./config/fbConfig";
 import createSagaMiddleware from "redux-saga";
-import rootSaga from "./store/sagas";
+import rootSaga from "./store/rootSaga";
 import { createFirestoreInstance } from "redux-firestore";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 import firebase from "firebase/app";

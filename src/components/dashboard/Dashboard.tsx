@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { firestoreConnect, FirebaseReducer } from "react-redux-firebase";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
-import { ProjectInbound } from "../../store/objects/projectObjects";
+import { ProjectObjects } from "../../store/project";
 import { ReducerState } from "ReduxTypes";
 
 interface StateProps {
-  projects: ProjectInbound[];
+  projects: ProjectObjects.ProjectInbound[];
   auth: FirebaseReducer.AuthState;
 }
 

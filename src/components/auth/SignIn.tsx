@@ -1,8 +1,8 @@
 import React, { Dispatch, useState } from "react";
 import { connect } from "react-redux";
-import { signIn } from "../../store/actions/authActions";
+import { authActions } from "../../store/auth";
 import { Redirect } from "react-router-dom";
-import { LoginCredentials } from "../../store/objects/authObjects";
+import { AuthObjects } from "../../store/auth";
 import { ReducerState, AnyAction } from "ReduxTypes";
 import { FirebaseReducer } from "react-redux-firebase";
 
@@ -14,7 +14,7 @@ interface StateProps {
 interface DispatchProps {
   handleSubmit: (
     e: React.FormEvent<HTMLFormElement>,
-    credentials: LoginCredentials
+    credentials: AuthObjects.LoginCredentials
   ) => void;
 }
 
@@ -31,7 +31,9 @@ const SignIn: React.FunctionComponent<StateProps & DispatchProps> = ({
     <div className="container">
       <form
         className="white"
-        onSubmit={e => handleSubmit(e, new LoginCredentials(email, password))}
+        onSubmit={e =>
+          handleSubmit(e, new AuthObjects.LoginCredentials(email, password))
+        }
       >
         <h5 className="grey-text text-darken-3">Sign In</h5>
         <div className="input-field">
@@ -72,10 +74,10 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): DispatchProps => {
   return {
     handleSubmit: (
       e: React.FormEvent<HTMLFormElement>,
-      credentials: LoginCredentials
+      credentials: AuthObjects.LoginCredentials
     ) => {
       e.preventDefault();
-      dispatch(signIn.request(credentials));
+      dispatch(authActions.signIn.request(credentials));
     }
   };
 };

@@ -1,9 +1,9 @@
 import { all, call, put, getContext, takeEvery } from "redux-saga/effects";
-import * as actions from "../actions/authActions";
+import * as actions from "./actions";
 import { PayloadAction } from "typesafe-actions";
-import { Types } from "../types/authTypes";
-import { LoginCredentials, SignUpCredentials } from "../objects/authObjects";
-import { wrap } from "./sagaHelpers";
+import Types from "./types";
+import { LoginCredentials, SignUpCredentials } from "./objects";
+import { wrap } from "../util/sagaHelpers";
 
 function* signIn(action: PayloadAction<Types.LOGIN_REQUEST, LoginCredentials>) {
   try {
