@@ -1,9 +1,22 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
+import { AnyAction } from "ReduxTypes";
+import { ProfileInbound } from "../../store/objects/profileObjects";
 
-const SignedInLinks = props => {
+interface OwnProps {
+  profile: ProfileInbound | null;
+}
+
+interface DispatchProps {
+  signOut: () => void;
+}
+
+const SignedInLinks: React.FunctionComponent<DispatchProps & OwnProps> = ({
+  signOut,
+  profile
+}) => {
   return (
     <div>
       <ul className="right">
@@ -11,11 +24,11 @@ const SignedInLinks = props => {
           <NavLink to="/create">New Project</NavLink>
         </li>
         <li>
-          <a onClick={props.signOut}>Log Out</a>
+          <a onClick={signOut}>Log Out</a>
         </li>
         <li>
           <NavLink to="/" className="btn btn-floating pink lighten-1">
-            {props.profile.initials}
+            {profile != null ? profile.initials : ""}
           </NavLink>
         </li>
       </ul>
@@ -23,7 +36,7 @@ const SignedInLinks = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): DispatchProps => {
   return {
     signOut: () => dispatch(signOut.request())
   };

@@ -4,7 +4,7 @@ import { createProject } from "../../store/actions/projectActions";
 import { Redirect } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
 import { AuthInbound } from "../../store/objects/authObjects";
-import { Project, NewProject } from "../../store/objects/projectObjects";
+import { NewProject } from "../../store/objects/projectObjects";
 import { ReducerState, AnyAction } from "ReduxTypes";
 
 interface OwnProps extends RouteComponentProps {}

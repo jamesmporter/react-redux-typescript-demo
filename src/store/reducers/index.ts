@@ -3,12 +3,14 @@ import projectReducer from "./projectReducer";
 import { combineReducers } from "redux";
 import { firestoreReducer } from "redux-firestore";
 import { firebaseReducer } from "react-redux-firebase";
+import { ProfileInbound } from "../objects/profileObjects";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   project: projectReducer,
   firestore: firestoreReducer,
-  firebase: firebaseReducer
+  firebase: (state: any, action: any) =>
+    firebaseReducer<ProfileInbound>(state, action)
 });
 
 export default rootReducer;
